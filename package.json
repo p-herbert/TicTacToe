@@ -9,6 +9,7 @@
   "author": "Peter Herbert (p-herbert)",
   "license": "ISC",
   "dependencies": {
-    "prompt": "^1.0.0"
+    "prompt": "^1.0.0",
+    "underscore": "^1.8.3"
   }
 }
