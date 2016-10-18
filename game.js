@@ -75,6 +75,10 @@ class TicTacToe {
   checkInput(pos) {
     return 0 <= pos[0] && pos[0] <= 2 && 0 <= pos[1] && pos[1] <= 2;
   }
+
+  hasWinner() {
+   return this.winner;
+  }
 }
 
 prompt.start();
