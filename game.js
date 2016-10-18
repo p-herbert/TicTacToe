@@ -6,6 +6,7 @@ class TicTacToe {
     this.board = [['', '', ''], ['', '', ''], ['', '', '']];
     this.playerOne = options.one;
     this.playerTwo = options.two;
+    this.winner = false;
   }
 
   // Print the board
@@ -28,6 +29,7 @@ class TicTacToe {
         } else {
           console.log(this.playerTwo + ' is the winner!');
         }
+        this.winner = true;
       }
     });
 
@@ -39,25 +41,28 @@ class TicTacToe {
         } else {
           console.log(this.playerTwo + ' is the winner!');
         }
+        this.winner = true;
       }
     });
 
     // Check diagonal
     if (this.board[0][0] === this.board[1][1] && this.board[1][1] === this.board[2][2]) {
-        if (this.board[0][0] === 'x') {
-          console.log(this.playerOne + ' is the winner!');
-        } else {
-          console.log(this.playerTwo + ' is the winner!');
-        }
+      if (this.board[0][0] === 'x') {
+        console.log(this.playerOne + ' is the winner!');
+      } else {
+        console.log(this.playerTwo + ' is the winner!');
+      }
+      this.winner = true;
     }
 
     // Check diagonal
     if (this.board[0][2] === this.board[1][1] && this.board[1][1] === this.board[0][2]) {
-        if (this.board[0][2] === 'x') {
-          console.log(this.playerOne + ' is the winner!');
-        } else {
-          console.log(this.playerTwo + ' is the winner!');
-        }
+      if (this.board[0][2] === 'x') {
+        console.log(this.playerOne + ' is the winner!');
+      } else {
+        console.log(this.playerTwo + ' is the winner!');
+      }
+      this.winner = true;
     }
   }
 
@@ -73,4 +78,9 @@ class TicTacToe {
 }
 
 prompt.start();
+
+prompt.get(['Enter a name for Player One (Xs)', 'Enter a name for Player Two (Os)'], (err, result) => {
+//   console.log('Enter a name for Player One (Xs) ' + result.playerOne);
+//   console.log('Enter a name for Player Two (Os) ' + result.playerTwo);
+});
 
