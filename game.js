@@ -1,4 +1,5 @@
 const prompt = require('prompt');
+const _ = require('underscore');
 
 class TicTacToe {
   constructor(options) {
@@ -19,7 +20,45 @@ class TicTacToe {
 
   // Determine if there is a winner
   winner() {
+    // Check the rows
+    this.board.forEach((row) => {
+      if (row[0] === row[1] && row[1] === row[2]) {
+        if (row[0] === 'x') {
+          console.log(this.playerOne + ' is the winner!');
+        } else {
+          console.log(this.playerTwo + ' is the winner!');
+        }
+      }
+    });
 
+    // Check the columns
+    _.zip(this.board).forEach((col) => {
+      if (col[0] === col[1] && col[1] === col[2]) {
+        if (col[0] === 'x') {
+          console.log(this.playerOne + ' is the winner!');
+        } else {
+          console.log(this.playerTwo + ' is the winner!');
+        }
+      }
+    });
+
+    // Check diagonal
+    if (this.board[0][0] === this.board[1][1] && this.board[1][1] === this.board[2][2]) {
+        if (this.board[0][0] === 'x') {
+          console.log(this.playerOne + ' is the winner!');
+        } else {
+          console.log(this.playerTwo + ' is the winner!');
+        }
+    }
+
+    // Check diagonal
+    if (this.board[0][2] === this.board[1][1] && this.board[1][1] === this.board[0][2]) {
+        if (this.board[0][2] === 'x') {
+          console.log(this.playerOne + ' is the winner!');
+        } else {
+          console.log(this.playerTwo + ' is the winner!');
+        }
+    }
   }
 
   // Check if position is empty
