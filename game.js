@@ -9,7 +9,7 @@ class TicTacToe {
 
   // Print the board
   printBoard() {
-
+    this.board.forEach(row => console.log(row));
   }
 
   // Mark the position on the board
