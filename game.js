@@ -1,6 +1,6 @@
 const prompt = require('prompt');
 
-class TicTacToe = {
+class TicTacToe {
   constructor(options) {
     this.board = [['', '', ''], ['', '', ''], ['', '', '']];
     this.playerOne = options.one;
@@ -29,8 +29,9 @@ class TicTacToe = {
 
   // Check user input
   checkInput(pos) {
-    return 0 <= pos[0] <= 2 && 0 <= pos[1] <= 2;
+    return 0 <= pos[0] && pos[0] <= 2 && 0 <= pos[1] && pos[1] <= 2;
   }
 }
 
 prompt.start();
+
