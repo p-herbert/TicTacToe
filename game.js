@@ -3,15 +3,19 @@ const _ = require('underscore');
 
 class TicTacToe {
   constructor(options) {
-    this.board = [['', '', ''], ['', '', ''], ['', '', '']];
+    this.board = [['x', 'o', 'x'], [' ', ' ', ' '], [' ', ' ', ' ']];
     this.playerOne = options.one;
     this.playerTwo = options.two;
     this.winner = false;
   }
 
   // Print the board
-  printBoard() {
-    this.board.forEach(row => console.log(row));
+  print() {
+    console.log(' ', this.board[0].join(' | '));
+    console.log(' - - - - - -');
+    console.log(' ', this.board[1].join(' | '));
+    console.log(' - - - - - -');
+    console.log(' ', this.board[2].join(' | '));
   }
 
   // Mark the position on the board
@@ -81,10 +85,13 @@ class TicTacToe {
   }
 }
 
-prompt.start();
+const game = new TicTacToe({one: 'Pete', two: 'Lou'});
+game.print();
 
-prompt.get(['Enter a name for Player One (Xs)', 'Enter a name for Player Two (Os)'], (err, result) => {
-//   console.log('Enter a name for Player One (Xs) ' + result.playerOne);
-//   console.log('Enter a name for Player Two (Os) ' + result.playerTwo);
-});
+// prompt.start();
+//
+// prompt.get(['Enter a name for Player One (Xs)', 'Enter a name for Player Two (Os)'], (err, result) => {
+// //   console.log('Enter a name for Player One (Xs) ' + result.playerOne);
+// //   console.log('Enter a name for Player Two (Os) ' + result.playerTwo);
+// });
 
