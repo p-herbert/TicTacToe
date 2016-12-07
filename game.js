@@ -3,10 +3,10 @@ const _ = require('underscore');
 
 class TicTacToe {
   constructor(options) {
-    this.board = [['x', 'o', 'x'], [' ', ' ', ' '], [' ', ' ', ' ']];
+    this.board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
     this.playerOne = options.one;
     this.playerTwo = options.two;
-    this.winner = false;
+//     this.winner = false;
   }
 
   // Print the board
@@ -20,59 +20,46 @@ class TicTacToe {
 
   // Mark the position on the board
   draw(pos, mark) {
-    this.board[pos[0]][pos[1]] = mark;
+    if (this.checkInput(pos) && this.checkPosition(pos)) {
+      this.board[pos[0]][pos[1]] = mark;
+    } else {
+      console.log('Invalid Position!');
+    }
+
+    this.print();
   }
 
   // Determine if there is a winner
-  winner() {
-    // Check the rows
-    this.board.forEach((row) => {
-      if (row[0] === row[1] && row[1] === row[2]) {
-        if (row[0] === 'x') {
-          console.log(this.playerOne + ' is the winner!');
-        } else {
-          console.log(this.playerTwo + ' is the winner!');
-        }
-        this.winner = true;
-      }
-    });
+  winner(pos) {
+    const row = pos[0];
+    const col = pos[1];
 
-    // Check the columns
-    _.zip(this.board).forEach((col) => {
-      if (col[0] === col[1] && col[1] === col[2]) {
-        if (col[0] === 'x') {
-          console.log(this.playerOne + ' is the winner!');
-        } else {
-          console.log(this.playerTwo + ' is the winner!');
-        }
-        this.winner = true;
-      }
-    });
-
+    // Check row
+    if (this.board[row][0] === this.board[row][1] &&
+        this.board[row][1] === this.board[row][2]) {
+      return true;
+    // Check column
+    } else if (this.board[0][col] === this.board[1][col] &&
+               this.board[1][col] === this.board[2][col]) {
+      return true;
     // Check diagonal
-    if (this.board[0][0] === this.board[1][1] && this.board[1][1] === this.board[2][2]) {
-      if (this.board[0][0] === 'x') {
-        console.log(this.playerOne + ' is the winner!');
-      } else {
-        console.log(this.playerTwo + ' is the winner!');
-      }
-      this.winner = true;
+    } else if (row === col &&
+               this.board[0][0] === this.board[1][1] &&
+               this.board[1][1] === this.board[2][2]) {
+      return true;
+    // Check diagonal
+    } else if (row + col === 2 &&
+               this.board[0][2] === this.board[1][1] &&
+               this.board[1][1] === this.board[2][0]) {
+      return true;
     }
 
-    // Check diagonal
-    if (this.board[0][2] === this.board[1][1] && this.board[1][1] === this.board[0][2]) {
-      if (this.board[0][2] === 'x') {
-        console.log(this.playerOne + ' is the winner!');
-      } else {
-        console.log(this.playerTwo + ' is the winner!');
-      }
-      this.winner = true;
-    }
+    return false;
   }
 
   // Check if position is empty
-  checkPos(pos) {
-    return this.board[pos[0]][pos[1]] === '';
+  checkPosition(pos) {
+    return this.board[pos[0]][pos[1]] === ' ';
   }
 
   // Check user input
@@ -80,9 +67,9 @@ class TicTacToe {
     return 0 <= pos[0] && pos[0] <= 2 && 0 <= pos[1] && pos[1] <= 2;
   }
 
-  hasWinner() {
-   return this.winner;
-  }
+//   hasWinner() {
+//    return this.winner;
+//   }
 }
 
 const game = new TicTacToe({one: 'Pete', two: 'Lou'});
