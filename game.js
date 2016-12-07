@@ -6,22 +6,25 @@ class TicTacToe {
     this.board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
     this.playerOne = options.one;
     this.playerTwo = options.two;
-//     this.winner = false;
+    this.count = 0;
   }
 
   // Print the board
   print() {
+    console.log('\n\n');
     console.log(' ', this.board[0].join(' | '));
     console.log(' - - - - - -');
     console.log(' ', this.board[1].join(' | '));
     console.log(' - - - - - -');
     console.log(' ', this.board[2].join(' | '));
+    console.log('\n\n');
   }
 
   // Mark the position on the board
-  draw(pos, mark) {
+  move(pos, mark) {
     if (this.checkInput(pos) && this.checkPosition(pos)) {
       this.board[pos[0]][pos[1]] = mark;
+      this.count += 1;
     } else {
       console.log('Invalid Position!');
     }
@@ -57,6 +60,11 @@ class TicTacToe {
     return false;
   }
 
+  // Determine if there is a draw
+  draw() {
+    return this.count === 9;
+  }
+
   // Check if position is empty
   checkPosition(pos) {
     return this.board[pos[0]][pos[1]] === ' ';
@@ -66,19 +74,22 @@ class TicTacToe {
   checkInput(pos) {
     return 0 <= pos[0] && pos[0] <= 2 && 0 <= pos[1] && pos[1] <= 2;
   }
-
-//   hasWinner() {
-//    return this.winner;
-//   }
 }
 
-const game = new TicTacToe({one: 'Pete', two: 'Lou'});
-game.print();
+prompt.start();
 
-// prompt.start();
-//
-// prompt.get(['Enter a name for Player One (Xs)', 'Enter a name for Player Two (Os)'], (err, result) => {
-// //   console.log('Enter a name for Player One (Xs) ' + result.playerOne);
-// //   console.log('Enter a name for Player Two (Os) ' + result.playerTwo);
-// });
+prompt.get([{
+  name: 'one',
+  description: 'Enter a name for Player One (Xs): ',
+  type: 'string',
+  required: true },
+{
+  name: 'two',
+  description: 'Enter a name for Player Two (Os): ',
+  type: 'string',
+  required: true }],
+function(err, results) {
+  const game = new TicTacToe(results);
+  game.print();
+});
 
