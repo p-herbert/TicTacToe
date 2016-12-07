@@ -2,10 +2,8 @@ const prompt = require('prompt');
 const _ = require('underscore');
 
 class TicTacToe {
-  constructor(options) {
+  constructor(props) {
     this.board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
-    this.playerOne = options.one;
-    this.playerTwo = options.two;
     this.count = 0;
   }
 
@@ -22,14 +20,8 @@ class TicTacToe {
 
   // Mark the position on the board
   move(pos, mark) {
-    if (this.checkInput(pos) && this.checkPosition(pos)) {
-      this.board[pos[0]][pos[1]] = mark;
-      this.count += 1;
-    } else {
-      console.log('Invalid Position!');
-    }
-
-    this.print();
+    this.board[pos[0]][pos[1]] = mark;
+    this.count += 1;
   }
 
   // Determine if there is a winner
@@ -76,20 +68,56 @@ class TicTacToe {
   }
 }
 
-prompt.start();
+const game = new TicTacToe();
+const players = [];
+let currentPlayer = 0;
 
+const playerMove = (name, marker) => {
+  game.print();
+
+  prompt.get({
+    name: 'move',
+    description: name + ', enter your move (row[0-2] column[0-2])',
+    type: 'string',
+    pattern: /\d\s\d/,
+    conform: (move) => {
+      const row = +move.split(' ')[0];
+      const col = +move.split(' ')[1];
+      return game.checkInput([row, col]) && game.checkPosition([row, col]);
+    },
+    before: value => [+value.split(' ')[0], +value.split(' ')[1]] },
+    (err, result) => {
+      game.move(result.move, marker);
+
+      if (game.winner(result.move)) {
+        console.log('CONGRATS ' + name + '!');
+        game.print();
+      } else if (game.draw()) {
+        console.log('DRAW');
+        game.print();
+      } else {
+        currentPlayer = +!currentPlayer;
+        playerMove(players[currentPlayer].name, players[currentPlayer].marker);
+      }
+    });
+};
+
+prompt.start();
 prompt.get([{
   name: 'one',
-  description: 'Enter a name for Player One (Xs): ',
+  description: 'Enter a name for Player One (Xs)',
   type: 'string',
   required: true },
 {
   name: 'two',
-  description: 'Enter a name for Player Two (Os): ',
+  description: 'Enter a name for Player Two (Os)',
   type: 'string',
   required: true }],
-function(err, results) {
-  const game = new TicTacToe(results);
-  game.print();
+(err, playerNames) => {
+  players.push({ name: playerNames.one, marker: 'x' });
+  players.push({ name: playerNames.two, marker: 'o' });
+
+  playerMove(players[currentPlayer].name, players[currentPlayer].marker);
 });
+prompt.stop();
 
